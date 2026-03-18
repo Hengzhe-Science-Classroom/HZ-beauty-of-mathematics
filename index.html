@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Beauty of Mathematics — Interactive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <button id="sidebar-toggle" aria-label="Toggle sidebar">&#9776;</button>
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>The Beauty of Mathematics</h1>
+                <p class="author">Livio / Mandelbrot / Strogatz / 吴军</p>
+                <div id="progress-container">
+                    <div id="progress-bar"><div id="progress-fill"></div></div>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Search topics...">
+            </div>
+            <nav id="chapter-nav"></nav>
+            <div id="sidebar-footer"><p class="copyright-notice" style="font-size:0.7rem;color:#888;margin-top:12px;text-align:center;">&copy; 2026 Hengzhe Zhao · AGPL-3.0 &amp; Commercial</p>
+                <button id="reset-progress">Reset Progress</button>
+            </div>
+        </aside>
+        <main id="main-content">
+            <div id="welcome-screen">
+                <div class="welcome-hero">
+                    <h1>The Beauty of Mathematics</h1>
+                    <h2>Golden Ratio, Fractals, Infinity, Symmetry &amp; Famous Problems</h2>
+                    <p class="welcome-description">
+                        Explore the most beautiful ideas in mathematics through stunning visualizations
+                        and captivating stories. No proofs required — just curiosity and wonder.
+                    </p>
+                </div>
+                <div class="roadmap">
+                    <h3>What You'll Explore</h3>
+                    <div class="roadmap-parts">
+                        <div class="roadmap-part">
+                            <h4>Part A: Numbers &amp; Patterns</h4>
+                            <ul>
+                                <li>Ch 0: Mathematics — The Science of Patterns</li>
+                                <li>Ch 1: Fibonacci Numbers</li>
+                                <li>Ch 2: The Golden Ratio &phi;</li>
+                                <li>Ch 3: Pascal's Triangle</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part B: Infinity</h4>
+                            <ul>
+                                <li>Ch 4: What Is Infinity?</li>
+                                <li>Ch 5: Hilbert's Hotel</li>
+                                <li>Ch 6: Cantor's Paradise</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part C: Fractals &amp; Chaos</h4>
+                            <ul>
+                                <li>Ch 7: Self-Similarity in Nature</li>
+                                <li>Ch 8: Classic Fractals</li>
+                                <li>Ch 9: The Mandelbrot Set</li>
+                                <li>Ch 10: Chaos &amp; the Butterfly Effect</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part D: Symmetry &amp; Geometry</h4>
+                            <ul>
+                                <li>Ch 11: Symmetry Everywhere</li>
+                                <li>Ch 12: Euler's Formula V-E+F=2</li>
+                                <li>Ch 13: Surfaces &amp; Topology</li>
+                                <li>Ch 14: Tilings &amp; Penrose Patterns</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part E: Famous Problems</h4>
+                            <ul>
+                                <li>Ch 15: The Story of &pi;</li>
+                                <li>Ch 16: The Four Color Theorem</li>
+                                <li>Ch 17: The Music of Primes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="welcome-start">Select a chapter from the sidebar to begin your journey into mathematical beauty!</p>
+            </div>
+            <div id="chapter-content" style="display:none;">
+                <div id="chapter-header">
+                    <div id="chapter-number-badge"></div>
+                    <h1 id="chapter-title"></h1>
+                    <p id="chapter-subtitle"></p>
+                </div>
+                <div id="section-tabs"></div>
+                <div id="section-content"></div>
+                <div id="exercises-panel" style="display:none;">
+                    <h3>Exercises</h3>
+                    <div id="exercises-list"></div>
+                </div>
+                <div id="chapter-nav-buttons">
+                    <button id="prev-btn">&larr; Previous</button>
+                    <span id="section-indicator"></span>
+                    <button id="next-btn">Next &rarr;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script>
+    window.CHAPTER_MANIFEST = [
+        {number:0,  id:'ch00', title:'Mathematics — The Science of Patterns',  file:'ch00-patterns'},
+        {number:1,  id:'ch01', title:'Fibonacci Numbers',                      file:'ch01-fibonacci'},
+        {number:2,  id:'ch02', title:'The Golden Ratio φ',                     file:'ch02-golden-ratio'},
+        {number:3,  id:'ch03', title:'Pascal\'s Triangle',                     file:'ch03-pascal'},
+        {number:4,  id:'ch04', title:'What Is Infinity?',                      file:'ch04-infinity'},
+        {number:5,  id:'ch05', title:'Hilbert\'s Hotel',                       file:'ch05-hilbert-hotel'},
+        {number:6,  id:'ch06', title:'Cantor\'s Paradise',                     file:'ch06-cantor'},
+        {number:7,  id:'ch07', title:'Self-Similarity in Nature',              file:'ch07-self-similarity'},
+        {number:8,  id:'ch08', title:'Classic Fractals',                       file:'ch08-classic-fractals'},
+        {number:9,  id:'ch09', title:'The Mandelbrot Set',                     file:'ch09-mandelbrot'},
+        {number:10, id:'ch10', title:'Chaos & the Butterfly Effect',           file:'ch10-chaos'},
+        {number:11, id:'ch11', title:'Symmetry Everywhere',                    file:'ch11-symmetry'},
+        {number:12, id:'ch12', title:'Euler\'s Formula V-E+F=2',              file:'ch12-euler-formula'},
+        {number:13, id:'ch13', title:'Surfaces & Topology',                    file:'ch13-topology'},
+        {number:14, id:'ch14', title:'Tilings & Penrose Patterns',            file:'ch14-tilings'},
+        {number:15, id:'ch15', title:'The Story of π',                         file:'ch15-pi'},
+        {number:16, id:'ch16', title:'The Four Color Theorem',                 file:'ch16-four-color'},
+        {number:17, id:'ch17', title:'The Music of Primes',                    file:'ch17-primes'}
+    ];
+    </script>
+    <script src="viz-engine.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
